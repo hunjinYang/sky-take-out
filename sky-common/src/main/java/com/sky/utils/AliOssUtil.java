@@ -19,6 +19,8 @@ public class AliOssUtil {
     private String accessKeySecret;
     private String bucketName;
 
+
+
     /**
      * 文件上传
      *

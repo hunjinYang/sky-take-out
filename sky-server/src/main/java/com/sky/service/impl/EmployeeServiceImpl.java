@@ -81,14 +81,6 @@ public class EmployeeServiceImpl implements EmployeeService {
         //补充缺失的属性值
         employee.setPassword(DigestUtils.md5DigestAsHex(PasswordConstant.DEFAULT_PASSWORD.getBytes()));  //密码MD5加入存储
         employee.setStatus(StatusConstant.ENABLE);
-        employee.setCreateTime(LocalDateTime.now());
-        employee.setUpdateTime(LocalDateTime.now());
-
-        //从ThreadLocal中获取到登陆人id
-
-        //获取token，解析token，拿到员工id
-        employee.setCreateUser(BaseContext.getCurrentId());
-        employee.setUpdateUser(BaseContext.getCurrentId());
 
         //调用mapper的新增方法，将员工对象存在employee表中
         employeeMapper.insert(employee);
@@ -138,8 +130,6 @@ public class EmployeeServiceImpl implements EmployeeService {
 
         //属性拷贝
         BeanUtils.copyProperties(employeeDTO,employee);
-        employee.setUpdateTime(LocalDateTime.now());
-        employee.setUpdateUser(BaseContext.getCurrentId());
 
         employeeMapper.update(employee);
     }
