@@ -128,7 +128,6 @@ public class DishServiceImpl implements DishService {
         BeanUtils.copyProperties(dishDTO,dish);
         dishMapper.updateById(dish);
 
-
         dishFlavorMapper.deleteByDishId(dish.getId());
 
         List<DishFlavor> flavors = dishDTO.getFlavors();
@@ -152,5 +151,15 @@ public class DishServiceImpl implements DishService {
         dish.setId(id);
         dish.setStatus(status);
         dishMapper.updateById(dish);
+    }
+
+    /**
+     * 根据分类id查询菜品
+     * @param categoryId
+     * @return
+     */
+    @Override
+    public List<Dish> list(Long categoryId) {
+        return dishMapper.getByCategoryId(categoryId);
     }
 }
