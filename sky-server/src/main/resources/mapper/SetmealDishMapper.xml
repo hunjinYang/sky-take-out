@@ -36,4 +36,9 @@
         select id, setmeal_id, dish_id, name, price, copies from setmeal_dish
             where setmeal_id = #{setmealId}
     </select>
+
+<!--    根据套餐id查询菜品列表-->
+    <select id="getDishItemById" resultType="com.sky.vo.DishItemVO">
+        select d.name name,d.image image,d.description description,sd.copies copies  from setmeal_dish sd left join dish d on sd.dish_id = d.id where sd.setmeal_id = #{setmealId}
+    </select>
 </mapper>

@@ -60,5 +60,11 @@
         where sd.setmeal_id = #{setmealId}
     </select>
 
+<!--    用户端根据categoryId和status查询菜品-->
+    <select id="getByCategoryIdAndStatus" resultType="com.sky.entity.Dish">
+        select id, name, category_id categoryId, price, image, description, status, create_time createTime, update_time updateTime, create_user createUser, update_user updateUser from dish where
+                               category_id = #{categoryId} and status = #{status} order by create_time desc
+    </select>
+
 
 </mapper>

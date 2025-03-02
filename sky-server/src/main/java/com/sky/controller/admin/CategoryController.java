@@ -19,7 +19,7 @@ import java.util.List;
 @Api(tags = "分类相关接口")
 @Slf4j
 @RequestMapping("/admin/category")
-@RestController
+@RestController("adminCategoryController")
 public class CategoryController {
 
     @Autowired

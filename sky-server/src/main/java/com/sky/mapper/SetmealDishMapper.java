@@ -2,6 +2,7 @@ package com.sky.mapper;
 
 import com.sky.anno.AutoFill;
 import com.sky.entity.SetmealDish;
+import com.sky.vo.DishItemVO;
 import org.apache.ibatis.annotations.Mapper;
 
 import java.util.List;
@@ -40,4 +41,11 @@ public interface SetmealDishMapper {
      * @param setmealId
      */
     void deleteBySetmealId(Long setmealId);
+
+    /**
+     * 根据套餐id查询菜品列表
+     * @param setmealId
+     * @return
+     */
+    List<DishItemVO> getDishItemById(Long setmealId);
 }
