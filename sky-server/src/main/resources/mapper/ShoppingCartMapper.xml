@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.sky.mapper.ShoppingCartMapper">
+<!--    添加购物车-->
+    <insert id="insert">
+        insert into shopping_cart(id, name, image, user_id, dish_id, setmeal_id, dish_flavor, number, amount, create_time) values
+                  (null,#{name},#{image},#{userId},#{dishId},#{setmealId},#{dishFlavor},#{number},#{amount},#{createTime})
+    </insert>
+
+<!--    更新购物车-->
+    <update id="update">
+        update shopping_cart
+        <set>
+            <if test="name != null"> name = #{name},</if>
+            <if test="image != null"> image = #{image},</if>
+            <if test="userId != null"> user_id = #{userId},</if>
+            <if test="dishId != null"> dish_id = #{dishId},</if>
+            <if test="setmealId != null"> setmeal_id = #{setmealId},</if>
+            <if test="dishFlavor != null"> dish_flavor = #{dishFlavor},</if>
+            <if test="number != null"> number = #{number},</if>
+            <if test="amount != null"> amount = #{amount}</if>
+        </set> where id = #{id}
+    </update>
+
+<!--    清空购物车-->
+    <delete id="deleteByUserId">
+        delete from shopping_cart where user_id = #{userId}
+    </delete>
+
+<!--    删除购物车一个商品-->
+    <delete id="delete">
+        delete from shopping_cart
+        <where>
+            <if test="userId != null">and user_id = #{userId}</if>
+            <if test="dishId != null">and dish_id = #{dishId}</if>
+            <if test="setmealId != null">and setmeal_id = #{setmealId}</if>
+            <if test="dishFlavor != null">and dish_flavor = #{dishFlavor}</if>
+        </where>
+    </delete>
+
+    <!--    根据条件查询购物车-->
+    <select id="listBy" resultType="com.sky.entity.ShoppingCart">
+        select id, name, image, user_id, dish_id, setmeal_id, dish_flavor, number, amount, create_time from shopping_cart
+        <where>
+            <if test="userId != null">and user_id = #{userId}</if>
+            <if test="dishId != null">and dish_id = #{dishId}</if>
+            <if test="setmealId != null">and setmeal_id = #{setmealId}</if>
+            <if test="dishFlavor != null">and dish_flavor = #{dishFlavor}</if>
+        </where>order by create_time desc
+    </select>
+
+<!--    查看购物车-->
+    <select id="listByUserId" resultType="com.sky.entity.ShoppingCart">
+        select id, name, image, user_id, dish_id, setmeal_id, dish_flavor, number, amount, create_time from shopping_cart where user_id = #{userId}
+    </select>
+</mapper>
