@@ -11,9 +11,11 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Set;
 
 @Api(tags = "菜品相关接口")
 @Slf4j
@@ -23,6 +25,9 @@ public class DishController {
 
     @Autowired
     private DishService dishService;
+
+    @Autowired
+    private RedisTemplate redisTemplate;
 
     /**
      * 新增菜品
@@ -34,6 +39,10 @@ public class DishController {
     public Result<String> save(@RequestBody DishDTO dishDTO){
         log.info("新增菜品：{}",dishDTO);
         dishService.save(dishDTO);
+
+        //缓存优化-清理缓存
+        redisTemplate.delete("dish_"+dishDTO.getCategoryId());
+
         return Result.success();
     }
 
@@ -60,6 +69,12 @@ public class DishController {
     public Result<String> delete(@RequestParam List<Long> ids){  //这里用集合接收必须使用@RequestParam
         log.info("批量删除菜品：{}",ids);
         dishService.delete(ids);
+
+        //缓存优化-清理缓存-将菜品缓存全部删除
+        Set keys = redisTemplate.keys("dish_*");
+        redisTemplate.delete(keys);
+
+
         return Result.success();
     }
 
@@ -87,6 +102,11 @@ public class DishController {
     public Result<String> update(@RequestBody DishDTO dishDTO){
         log.info("修改菜品：{}",dishDTO);
         dishService.update(dishDTO);
+
+        //缓存优化-清理缓存-将菜品缓存全部删除
+        Set keys = redisTemplate.keys("dish_*");
+        redisTemplate.delete(keys);
+
         return Result.success();
     }
 
@@ -101,6 +121,11 @@ public class DishController {
     public Result<String> setStatus(@PathVariable Integer status,Long id){
         log.info("菜品起售停售：{}",status);
         dishService.setStatus(id,status);
+
+        //缓存优化-清理缓存-将菜品缓存全部删除
+        Set keys = redisTemplate.keys("dish_*");
+        redisTemplate.delete(keys);
+
         return Result.success();
     }
 

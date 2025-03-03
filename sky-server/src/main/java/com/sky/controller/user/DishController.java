@@ -38,14 +38,15 @@ public class DishController {
     @GetMapping("/list")
     public Result<List<DishVO>> list(Long categoryId){
         log.info("根据分类id查询菜品：{}",categoryId);
-
         //构造Redis中的key
         String key = "dish_"+categoryId;
-        //查询redis中是否有菜品数据
+        //在查询MySQL数据库之前，先查询redis中是否有菜品数据
         List<DishVO> list = (List<DishVO>)redisTemplate.opsForValue().get(key);
+        //redis中有菜品数据，直接返回
         if(list != null && list.size()>0){
             return Result.success(list);
         }
+        //redis中没有菜品数据，查询MySQL数据库
         Dish dish = new Dish();
         dish.setCategoryId(categoryId);
         dish.setStatus(StatusConstant.ENABLE); //查询启售中的菜品
