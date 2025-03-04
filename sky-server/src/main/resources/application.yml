@@ -70,3 +70,9 @@ sky:
     weChatPayCertFilePath: ${sky.wechat.weChatPayCertFilePath}
     notifyUrl: ${sky.wechat.notifyUrl}
     refundNotifyUrl: ${sky.wechat.refundNotifyUrl}
+
+    # 百度地图参数
+    shop:
+      address: ${sky.shop.address}
+      ak: ${sky.shop.ak}
+      distance: ${sky.shop.distance}
