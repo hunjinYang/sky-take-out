@@ -44,9 +44,7 @@ public class WorkSpaceServiceImpl implements WorkSpaceService {
      * @return
      */
     @Override
-    public BusinessDataVO businessData() {
-        LocalDateTime beginTime = LocalDateTime.now().with(LocalTime.MIN);
-        LocalDateTime endTime  = LocalDateTime.now().with(LocalTime.MAX);
+    public BusinessDataVO businessData(LocalDateTime beginTime,LocalDateTime endTime) {
         Map map = new HashMap();
         map.put("status", Orders.COMPLETED);
         map.put("beginTime", beginTime);
