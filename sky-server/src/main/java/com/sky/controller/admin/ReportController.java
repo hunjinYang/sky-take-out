@@ -19,7 +19,7 @@ import org.springframework.web.bind.annotation.RestController;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 
-@Api(tags = "数据统计")
+@Api(tags = "数据统计接口")
 @Slf4j
 @RequestMapping("/admin/report")
 @RestController
