@@ -1,13 +1,16 @@
 package com.sky.mapper;
 
+import com.sky.dto.GoodsSalesDTO;
 import com.sky.dto.OrdersCancelDTO;
 import com.sky.dto.OrdersPageQueryDTO;
 import com.sky.entity.Orders;
+import org.apache.ibatis.annotations.MapKey;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Select;
 
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Map;
 
 @Mapper
 public interface OrdersMapper {
@@ -61,4 +64,26 @@ public interface OrdersMapper {
     List<Orders> getByStatusAndOrderTimeLT(Integer status, LocalDateTime orderTime);
 
 
+    /**
+     * 统计营业额
+     * @param map
+     * @return
+     */
+    @Select("select sum(amount) from orders where status=#{status} and order_time between #{beginTime} and #{endTime}")
+    Double sumByMap(Map map);
+
+    /**
+     * 统计订单数量
+     * @param map
+     * @return
+     */
+    Integer getByMap(Map map);
+
+    /**
+     * 统计销量前10
+     * @param map
+     * @return
+     */
+    //@MapKey("name")
+    List<GoodsSalesDTO> sumTop10(Map map);
 }

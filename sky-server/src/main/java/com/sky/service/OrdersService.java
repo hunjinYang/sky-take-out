@@ -7,6 +7,8 @@ import com.sky.vo.OrderStatisticsVO;
 import com.sky.vo.OrderSubmitVO;
 import com.sky.vo.OrderVO;
 
+import java.util.Map;
+
 public interface OrdersService {
 
     /**
@@ -102,4 +104,5 @@ public interface OrdersService {
      * @param id
      */
     void completeOrders(Long id);
+
 }
